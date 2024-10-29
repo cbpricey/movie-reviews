@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Actor>
+
+    <h2>Actors</h2>
+
+    <div class="header-section">
+        <div class="nav-controls">
+            <a href="@Url.Action("Create", "Actors")" class="btn btn-primary">Add New Actor</a>
+        </div>
+        <div class="dataTable-controls">
+            <label for="actorsTable_length">Show</label>
+            <select name="actorsTable_length" aria-controls="actorsTable" id="actorsTable_length">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <span>entries</span>
+        </div>
+    </div>
+
+    <table id="actorsTable" class="display">
+        <thead>
+            <tr>
+                <th>Poster</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var actor in Model)
+            {
+                <tr onclick="location.href='@Url.Action("Details", "Actors", new { id = actor.Id })'" style="cursor: pointer;">
+                    <td>
+                        <img src="@actor.PhotoUrl" alt="Poster" style="width: 50px; height: auto;" />
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => actor.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => actor.Gender)</td>
+                    <td>@Html.DisplayFor(modelItem => actor.Age)</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Actors", new { id = actor.Id })">Edit</a> |
+                        <a href="@Url.Action("Delete", "Actors", new { id = actor.Id })">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @section Scripts {
+        <script>$(document).ready(function () {
+                if ($.fn.dataTable.isDataTable('#actorsTable')) {
+                    $('#actorsTable').DataTable().destroy();
+                }
+
+                $('#actorsTable').DataTable({
+                    searching: false,
+                    lengthChange: false
+                });
+            });</script>
+    }
+

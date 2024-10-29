@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Movie>
+
+<h2>Movies</h2>
+
+<div class="header-section">
+    <div class="nav-controls">
+        <a href="@Url.Action("Create")" class="btn btn-primary">Add New Movie</a>
+    </div>
+    <div class="dataTable-controls">
+        <label for="moviesTable_length">Show</label>
+        <select name="moviesTable_length" aria-controls="moviesTable" id="moviesTable_length">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <span>entries</span>
+    </div>
+</div>
+
+<table id="moviesTable" class="display">
+    <thead>
+        <tr>
+            <th>Poster</th>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Year</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr onclick="location.href='@Url.Action("Details", new { id = movie.Id })'" style="cursor: pointer;">
+                <td>
+                    <img src="@movie.PosterUrl" alt="Poster" style="width: 50px; height: auto;" />
+                </td>
+                <td>@Html.DisplayFor(modelItem => movie.Title)</td>
+                <td>@Html.DisplayFor(modelItem => movie.Genre)</td>
+                <td>@Html.DisplayFor(modelItem => movie.ReleaseYear)</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = movie.Id })" title="Edit"><i class="fas fa-pencil-alt"></i></a> |
+                    <a href="@Url.Action("Delete", new { id = movie.Id })" title="Delete"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>$(document).ready(function () {
+
+            if ($.fn.dataTable.isDataTable('#moviesTable')) {
+
+                $('#moviesTable').DataTable().destroy();
+            }
+
+            $('#moviesTable').DataTable({
+                searching: false,
+                lengthChange: false
+            });
+        });</script>
+}

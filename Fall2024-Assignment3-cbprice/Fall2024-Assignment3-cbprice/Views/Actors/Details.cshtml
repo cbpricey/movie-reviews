@@ -1,0 +1,62 @@
+﻿@model ActorDetailsViewModel
+
+@if (Model.Actor != null)
+{
+    <h1>@Model.Actor.Name</h1>
+
+    <img src="@Model.Actor.PhotoUrl" alt="Actor Photo" />
+
+    <div class="actor-details-box">
+        <p>Gender: @Model.Actor.Gender</p>
+    </div>
+
+
+    <div class="actor-details-box">
+        <p>Age: @Model.Actor.Age</p>
+    </div>
+
+    <a href="@Model.Actor.IMDBLink" class="imdb-button" target="_blank">
+        <i class="fab fa-imdb"></i> IMDB
+    </a>
+
+}
+
+<h3>Movies Featuring @Model.Actor?.Name</h3>
+<ul>
+    @foreach (var movie in Model.Movies)
+    {
+        <li>@movie.Title (@movie.Year)</li>
+    }
+</ul>
+
+<h3>Tweets</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Tweet</th>
+            <th>Sentiment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Tweets.Any())
+        {
+            @foreach (var tweet in Model.Tweets)
+            {
+                <tr>
+                    <td>@tweet.TweetText</td>
+                    <td>@tweet.Sentiment</td>
+                </tr>
+            }
+        }
+        else
+        {
+        <tr>
+            <td colspan="2">No Tweets available.</td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+<h4>Overall Sentiment: @Model.OverallSentiment</h4>
+

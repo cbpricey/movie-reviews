@@ -1,0 +1,38 @@
+﻿@model Actor
+
+@{
+    ViewBag.Title = "Delete Actor";
+}
+
+<h2>Delete Actor</h2>
+
+<div>
+    <h4>Are you sure you want to delete this actor?</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Name</dt>
+        <dd>@Html.DisplayFor(model => model.Name)</dd>
+
+        <dt>Gender</dt>
+        <dd>@Html.DisplayFor(model => model.Gender)</dd>
+
+        <dt>Age</dt>
+        <dd>@Html.DisplayFor(model => model.Age)</dd>
+
+        <dt>IMDB Link</dt>
+        <dd>@Html.DisplayFor(model => model.IMDBLink)</dd>
+
+        <dt>Photo URL</dt>
+        <dd>@Html.DisplayFor(model => model.PhotoUrl)</dd>
+    </dl>
+</div>
+
+@using (Html.BeginForm("Delete", "Actors", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.Id)
+
+    <div>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
+}

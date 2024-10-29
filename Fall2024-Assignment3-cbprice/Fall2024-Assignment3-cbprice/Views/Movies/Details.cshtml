@@ -1,0 +1,60 @@
+﻿@model MovieDetailsViewModel
+
+@if (Model.Movie != null)
+{
+    <h1>@Model.Movie.Title</h1>
+
+    <img src="@Model.Movie.PosterUrl" alt="Movie Poster" />
+
+    <div class="genre-release-box">
+        <p>Genre: @Model.Movie.Genre</p>
+    </div>
+
+    <div class="genre-release-box">
+        <p>Released in: @Model.Movie.ReleaseYear</p>
+    </div>
+
+    <a href="@Model.Movie.IMDBLink" class="imdb-button" target="_blank">
+        <i class="fab fa-imdb"></i> IMDB
+    </a>
+
+
+}
+
+<h3>Actors in this Movie</h3>
+<ul>
+    @foreach (var actor in Model.Actors)
+    {
+        <li>@actor.Name (@actor.Gender, @actor.Age) - <a href="@actor.IMDBLink" target="_blank">IMDB</a></li>
+    }
+</ul>
+
+<h2>Reviews</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Review</th>
+            <th>Sentiment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Reviews.Any())
+        {
+            foreach (var review in Model.Reviews)
+            {
+                <tr>
+                    <td>@review.ReviewText</td>
+                    <td>@review.Sentiment</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">No reviews available.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>Overall Sentiment: @Model.OverallSentiment</h4>
